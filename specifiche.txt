@@ -1,6 +1,6 @@
 Progetto: ClinicaACME
 
-Tecnologie usate: HTML, CSS, JPA, Java, Spring, OpenJpa, Maven.
+Tecnologie usate: HTML, CSS, Bootstrap, JPA, Java, Spring, OpenJpa, Maven.
 
 Descrizione testuale per i casi d'uso di:
 
