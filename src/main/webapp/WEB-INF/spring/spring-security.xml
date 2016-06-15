@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<global-method-security secured-annotations="enabled" />
+
+	<http auto-config="true">
+		<access-denied-handler error-page="/403" />
+		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/user/**" access="ROLE_ADMIN,ROLE_USER" />
+		<form-login login-page="/login" default-target-url="/default"
+			authentication-failure-url="/login?error" username-parameter="username"
+			password-parameter="password" />
+		<logout logout-success-url="/login?logout" />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select username,password,enabled from user_authentication where username=?"
+				authorities-by-username-query="select u1.username, u2.role from user_authentication u1, user_authorization u2 where u1.user_id = u2.user_id and u1.username =? " />
+		</authentication-provider>
+	</authentication-manager>
+
+	<!-- DB STATEMENTS: 
+		- "CREATE TABLE USER_AUTHENTICATION (USER_ID INTEGER, USERNAME VARCHAR(50), 
+			PASSWORD VARCHAR(50), ENABLED BOOLEAN);"
+		- "INSERT INTO USER_AUTHENTICATION VALUES(1,'alpha','pass1',TRUE);"
+		- "CREATE TABLE USER_AUTHORIZATION (USER_ROLE_ID INTEGER,USER_ID INTEGER, ROLE VARCHAR(50));"
+		- "INSERT INTO USER_AUTHORIZATION VALUES(1,1,'ROLE_ADMIN');" -->
+
+</beans:beans>

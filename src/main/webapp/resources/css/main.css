@@ -1,0 +1,128 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+body {
+    background-image: url("../img/bg_texture.png");
+    font-family: 'Open Sans';
+    font-weight: 300;
+}
+
+.navbar-toggle {
+    border: none;
+    background: transparent !important;
+}
+
+.navbar-toggle:hover {
+    background: transparent !important;
+}
+
+.navbar-toggle .icon-bar {
+    width: 22px;
+    transition: all 0.2s;
+}
+
+.navbar-toggle .top-bar {
+    transform: rotate(45deg);
+    transform-origin: 10% 10%;
+}
+
+.navbar-toggle .middle-bar {
+    opacity: 0;
+}
+
+.navbar-toggle .bottom-bar {
+    transform: rotate(-45deg);
+    transform-origin: 10% 90%;
+}
+
+.navbar-toggle.collapsed .top-bar {
+    transform: rotate(0);
+}
+
+.navbar-toggle.collapsed .middle-bar {
+    opacity: 1;
+}
+
+.navbar-toggle.collapsed .bottom-bar {
+    transform: rotate(0);
+}
+
+.footer {
+    background-color: #f8f8f8;
+    margin-top: 70px;!important
+}
+
+.content {
+	margin-bottom: 130px;
+}
+
+p.footer {
+    margin-bottom: 10px;
+    margin-top: 8px;
+    color: #666;
+    font-size: 16px;
+    text-align: center;
+}
+
+.colorgraph {
+    height: 5px;
+    border-top: 0;
+    background: #c4e17f;
+    border-radius: 5px;
+    background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+    background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
+
+.form {
+    max-width: 580px;
+    padding: 15px 35px 45px;
+    margin: 0 auto;
+}
+
+.intestazione {
+    margin-top: 60px;
+    font-weight: 400;
+}
+
+.immagine {
+    margin: auto 27%;
+}
+
+.scritta-main {
+    padding-top: 50px;
+}
+
+.scritta-main > h1 {
+    font-weight: bolder;
+    font-size: 55px;
+}
+
+.main-buttons {
+    margin-top: 80px;
+    margin-bottom: 130px;
+}
+
+.main-buttons .btn {
+    margin-top: 10px;
+    background-color: #009688;
+    color: #fff;
+}
+
+.main-buttons .btn:hover {
+    background-color: #00B5A4;
+}
+
+.users-buttons-main {
+    margin-top: 50px;
+}
+
+.users-buttons-main .btn {
+    margin-top: 10px;
+    background-color: #009688;
+    color: #fff;
+}
+
+.users-buttons-main .btn:hover {
+    background-color: #00B5A4;
+}

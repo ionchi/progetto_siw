@@ -1,0 +1,445 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.4.4
+-- Dumped by pg_dump version 9.4.4
+-- Started on 2016-06-15 09:26:13
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 182 (class 3079 OID 11855)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2067 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 174 (class 1259 OID 61049)
+-- Name: doctor; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE doctor (
+    id bigint NOT NULL,
+    firstname character varying(255) NOT NULL,
+    lastname character varying(255) NOT NULL,
+    specialization character varying(255) NOT NULL
+);
+
+
+ALTER TABLE doctor OWNER TO postgres;
+
+--
+-- TOC entry 175 (class 1259 OID 61057)
+-- Name: exam; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE exam (
+    id bigint NOT NULL,
+    creationdate timestamp without time zone,
+    examdate date,
+    doctor_id bigint,
+    patient_id bigint,
+    type_id bigint
+);
+
+
+ALTER TABLE exam OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 61062)
+-- Name: examtype; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE examtype (
+    id bigint NOT NULL,
+    cost double precision NOT NULL,
+    description character varying(1000),
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE examtype OWNER TO postgres;
+
+--
+-- TOC entry 177 (class 1259 OID 61070)
+-- Name: indicator; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE indicator (
+    id bigint NOT NULL,
+    name character varying(255) NOT NULL,
+    examtype_id bigint
+);
+
+
+ALTER TABLE indicator OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 61075)
+-- Name: openjpa_sequence_table; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE openjpa_sequence_table (
+    id smallint NOT NULL,
+    sequence_value bigint
+);
+
+
+ALTER TABLE openjpa_sequence_table OWNER TO postgres;
+
+--
+-- TOC entry 179 (class 1259 OID 61080)
+-- Name: patient; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE patient (
+    id bigint NOT NULL,
+    firstname character varying(255) NOT NULL,
+    lastname character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    username character varying(255) NOT NULL
+);
+
+
+ALTER TABLE patient OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 61088)
+-- Name: prerequisite; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE prerequisite (
+    id bigint NOT NULL,
+    description character varying(200),
+    name character varying(255) NOT NULL,
+    examtype_id bigint
+);
+
+
+ALTER TABLE prerequisite OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 61093)
+-- Name: result; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE result (
+    id bigint NOT NULL,
+    name character varying(255) NOT NULL,
+    value character varying(255),
+    examtype_id bigint
+);
+
+
+ALTER TABLE result OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 60258)
+-- Name: user_authentication; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE user_authentication (
+    user_id integer,
+    username character varying(50),
+    password character varying(50),
+    enabled boolean
+);
+
+
+ALTER TABLE user_authentication OWNER TO postgres;
+
+--
+-- TOC entry 173 (class 1259 OID 60261)
+-- Name: user_authorization; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE user_authorization (
+    user_role_id integer,
+    user_id integer,
+    role character varying(50)
+);
+
+
+ALTER TABLE user_authorization OWNER TO postgres;
+
+--
+-- TOC entry 2052 (class 0 OID 61049)
+-- Dependencies: 174
+-- Data for Name: doctor; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY doctor (id, firstname, lastname, specialization) FROM stdin;
+402	Giuseppe	Verdi	Oculista
+\.
+
+
+--
+-- TOC entry 2053 (class 0 OID 61057)
+-- Dependencies: 175
+-- Data for Name: exam; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY exam (id, creationdate, examdate, doctor_id, patient_id, type_id) FROM stdin;
+556	2015-06-12 00:00:00	2016-07-07	402	451	301
+555	2015-06-12 00:00:00	2016-07-07	402	451	301
+\.
+
+
+--
+-- TOC entry 2054 (class 0 OID 61062)
+-- Dependencies: 176
+-- Data for Name: examtype; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY examtype (id, cost, description, name) FROM stdin;
+301	50	I test delle intolleranze alimentari, spesso definite erroneamente "allergie alimentari", devono essere preceduti da una visita approfondita che coinvolge diverse specialità mediche: gastroenterologia, dermatologia, allergologia.	Intolleranze alimentari (test)
+351	25	Il sangue è costituito da una parte liquida chiamata plasma e da una parte cellulare o corpuscolata. Nel plasma è presente una vasta gamma di sostanze quali enzimi, minerali, lipidi, ormoni, zuccheri,	Analisi del sangue
+\.
+
+
+--
+-- TOC entry 2055 (class 0 OID 61070)
+-- Dependencies: 177
+-- Data for Name: indicator; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY indicator (id, name, examtype_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2056 (class 0 OID 61075)
+-- Dependencies: 178
+-- Data for Name: openjpa_sequence_table; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY openjpa_sequence_table (id, sequence_value) FROM stdin;
+0	551
+\.
+
+
+--
+-- TOC entry 2057 (class 0 OID 61080)
+-- Dependencies: 179
+-- Data for Name: patient; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY patient (id, firstname, lastname, password, username) FROM stdin;
+451	Mario	Rossi	pass1	beta
+\.
+
+
+--
+-- TOC entry 2058 (class 0 OID 61088)
+-- Dependencies: 180
+-- Data for Name: prerequisite; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY prerequisite (id, description, name, examtype_id) FROM stdin;
+315	il paziente non puo' essere una donna in gravidanza	no pregnant	301
+310	il paziente deve essere a digiuno da 12 ore	digiuno 12	301
+316	il paziente deve essere a digiuno da 5 ore	digiuno 5	351
+\.
+
+
+--
+-- TOC entry 2059 (class 0 OID 61093)
+-- Dependencies: 181
+-- Data for Name: result; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY result (id, name, value, examtype_id) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2050 (class 0 OID 60258)
+-- Dependencies: 172
+-- Data for Name: user_authentication; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY user_authentication (user_id, username, password, enabled) FROM stdin;
+1	alpha	pass1	t
+2	beta	pass1	t
+\.
+
+
+--
+-- TOC entry 2051 (class 0 OID 60261)
+-- Dependencies: 173
+-- Data for Name: user_authorization; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY user_authorization (user_role_id, user_id, role) FROM stdin;
+1	1	ROLE_ADMIN
+2	2	ROLE_USER
+\.
+
+
+--
+-- TOC entry 1920 (class 2606 OID 61056)
+-- Name: doctor_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY doctor
+    ADD CONSTRAINT doctor_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1922 (class 2606 OID 61061)
+-- Name: exam_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY exam
+    ADD CONSTRAINT exam_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1924 (class 2606 OID 61069)
+-- Name: examtype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY examtype
+    ADD CONSTRAINT examtype_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1926 (class 2606 OID 61074)
+-- Name: indicator_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY indicator
+    ADD CONSTRAINT indicator_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1928 (class 2606 OID 61079)
+-- Name: openjpa_sequence_table_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY openjpa_sequence_table
+    ADD CONSTRAINT openjpa_sequence_table_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1930 (class 2606 OID 61087)
+-- Name: patient_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY patient
+    ADD CONSTRAINT patient_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1932 (class 2606 OID 61092)
+-- Name: prerequisite_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY prerequisite
+    ADD CONSTRAINT prerequisite_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1934 (class 2606 OID 61100)
+-- Name: result_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY result
+    ADD CONSTRAINT result_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1935 (class 2606 OID 61101)
+-- Name: exam_doctor_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY exam
+    ADD CONSTRAINT exam_doctor_id_fkey FOREIGN KEY (doctor_id) REFERENCES doctor(id) DEFERRABLE;
+
+
+--
+-- TOC entry 1936 (class 2606 OID 61106)
+-- Name: exam_patient_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY exam
+    ADD CONSTRAINT exam_patient_id_fkey FOREIGN KEY (patient_id) REFERENCES patient(id) DEFERRABLE;
+
+
+--
+-- TOC entry 1937 (class 2606 OID 61111)
+-- Name: exam_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY exam
+    ADD CONSTRAINT exam_type_id_fkey FOREIGN KEY (type_id) REFERENCES examtype(id) DEFERRABLE;
+
+
+--
+-- TOC entry 1938 (class 2606 OID 61116)
+-- Name: indicator_examtype_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY indicator
+    ADD CONSTRAINT indicator_examtype_id_fkey FOREIGN KEY (examtype_id) REFERENCES examtype(id) DEFERRABLE;
+
+
+--
+-- TOC entry 1939 (class 2606 OID 61121)
+-- Name: prerequisite_examtype_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY prerequisite
+    ADD CONSTRAINT prerequisite_examtype_id_fkey FOREIGN KEY (examtype_id) REFERENCES examtype(id) DEFERRABLE;
+
+
+--
+-- TOC entry 1940 (class 2606 OID 61126)
+-- Name: result_examtype_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY result
+    ADD CONSTRAINT result_examtype_id_fkey FOREIGN KEY (examtype_id) REFERENCES exam(id) DEFERRABLE;
+
+
+--
+-- TOC entry 2066 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2016-06-15 09:26:13
+
+--
+-- PostgreSQL database dump complete
+--
+
