@@ -20,6 +20,7 @@ Attore primario: amministrazione
   - L'amministrazione associa un paziente all'esame creato
   - Il sistema registra l'esame (impostando automaticamente la data di prenotazione)
   Precondizioni: l'amministratore è identificato e autenticato
+  ---> Non realizzato <---
 
 Caso d'uso UC3: consulta risultati proprio esame
 Attore primario: paziente
@@ -53,7 +54,8 @@ Attore primario: amministrazione
   - Il sistema presenta all'amministratore l'esame corrispondente al codice immesso
   - L'amministratore inserisce tutti i risultati dell'esame
   Precondizioni: l'amministratore è identificato e autenticato
+  ---> Non realizzato <---
 
 Casi d'uso aggiuntivi: 
-- Inserimento medico 
-- Inserimento paziente
+Caso d'uso UC7: Inserimento medico 
+Caso d'uso UC8: Inserimento paziente
